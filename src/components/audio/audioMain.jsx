@@ -184,6 +184,7 @@ const AudioMain = () => {
                 className='pad-volume'
             />
             <button
+                onClick={play}
                 onMouseDown={play}
                 onMouseUp={pause}
                 className='play'
