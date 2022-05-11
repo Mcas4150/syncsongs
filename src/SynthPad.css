@@ -6,10 +6,8 @@
 }
 
 .AudioMain {
-  height: 100%;
-  display: grid;
   width: 300px;
-  grid-template-columns: auto auto;
+
   background-color: #5d5d5d;
 }
 

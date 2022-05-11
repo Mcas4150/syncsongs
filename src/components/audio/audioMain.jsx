@@ -203,72 +203,87 @@ const AudioMain = () => {
 
   return (
     <div className="AudioMain">
-      <button onClick={addOscillatorNode}>Add New Oscillator</button>
-
-      {/* Add onChange handler in order to setSelectedOscillatorNode, render selection options,
+      <div>63</div>
+      <div>
+        <div className="Keyboard">
+          <div>{keyEntry}</div>
+          <input
+            type="text"
+            id="inputField"
+            // onKeyDown={(e) => setKeyEntry(keyEntry.concat(e.key))}
+            onKeyDown={handleKeyboardInput}
+          />
+        </div>
+        <button onClick={createOscillator}>Add New Oscillator</button>
+      </div>
+      <div>
+        <button onClick={addOscillatorNode}>Add New Oscillator</button>
+        {/* Add onChange handler in order to setSelectedOscillatorNode, render selection options,
                 and set value to the index of the selectedOscillatorNode */}
-      <select
-        onChange={changeSelectedOscillatorNode}
-        value={selectedOscillatorNodeIndex}
-        className="select-oscillator"
-      >
-        {oscillatorSelectOptions}
-      </select>
-
-      {/* Set the value of .frequency element to be the frequency of the selected oscillator
+        <select
+          onChange={changeSelectedOscillatorNode}
+          value={selectedOscillatorNodeIndex}
+          className="select-oscillator"
+        >
+          {oscillatorSelectOptions}
+        </select>
+        {/* Set the value of .frequency element to be the frequency of the selected oscillator
                 and add onChange handler to change the frequency of selectedOscillatorNode */}
-      <input
-        type="number"
-        value={
-          selectedOscillatorNodeIndex >= 0
-            ? oscillatorNodes[selectedOscillatorNodeIndex].frequency
-            : ""
-        }
-        onChange={updateSelectedOscillatorFrequency}
-        className="frequency"
-      />
-
-      {/* Set the value of .wave-type element to be the type of the selected oscillator
+        <input
+          type="number"
+          value={
+            selectedOscillatorNodeIndex >= 0
+              ? oscillatorNodes[selectedOscillatorNodeIndex].frequency
+              : ""
+          }
+          onChange={updateSelectedOscillatorFrequency}
+          className="frequency"
+        />
+        {/* Set the value of .wave-type element to be the type of the selected oscillator
                 and add onChange handler to change the type of selectedOscillatorNode */}
-      <select
-        value={
-          selectedOscillatorNodeIndex >= 0
-            ? oscillatorNodes[selectedOscillatorNodeIndex].type
-            : ""
-        }
-        onChange={updateSelectedOscillatorType}
-        className="wave-type"
-      >
-        <option value="sine">sine</option>
-        <option value="sawtooth">sawtooth</option>
-        <option value="square">square</option>
-        <option value="triangle">triangle</option>
-      </select>
-
-      <p>Oscillator Volume: </p>
-      {/* Set the value of .oscillator-volume element to be the gain value of the selected oscillator's GainNode
+        <select
+          value={
+            selectedOscillatorNodeIndex >= 0
+              ? oscillatorNodes[selectedOscillatorNodeIndex].type
+              : ""
+          }
+          onChange={updateSelectedOscillatorType}
+          className="wave-type"
+        >
+          <option value="sine">sine</option>
+          <option value="sawtooth">sawtooth</option>
+          <option value="square">square</option>
+          <option value="triangle">triangle</option>
+        </select>
+      </div>
+      <div>
+        <p>Oscillator Volume: </p>
+        {/* Set the value of .oscillator-volume element to be the gain value of the selected oscillator's GainNode
                 and add onChange handler to change the gain of selectedOscillatorNode */}
-      <input
-        type="range"
-        min="0"
-        max="100"
-        value={
-          selectedOscillatorNodeIndex >= 0
-            ? oscillatorNodes[selectedOscillatorNodeIndex].gain
-            : 0
-        }
-        onChange={updateSelectedOscillatorVolume}
-        className="oscillator-volume"
-      />
-      <p>Master Volume: </p>
-      <input
-        type="range"
-        min="0"
-        max="100"
-        value={masterGainValue * 100}
-        onChange={changeMasterVolume}
-        className="pad-volume"
-      />
+        <input
+          type="range"
+          min="0"
+          max="100"
+          value={
+            selectedOscillatorNodeIndex >= 0
+              ? oscillatorNodes[selectedOscillatorNodeIndex].gain
+              : 0
+          }
+          onChange={updateSelectedOscillatorVolume}
+          className="oscillator-volume"
+        />
+      </div>
+      <div>
+        <p>Master Volume: </p>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          value={masterGainValue * 100}
+          onChange={changeMasterVolume}
+          className="pad-volume"
+        />
+      </div>
       <button
         // onClick={play}
         onMouseDown={play}
@@ -277,18 +292,6 @@ const AudioMain = () => {
       >
         Play
       </button>
-
-      <div>63</div>
-      <div className="Keyboard">
-        <div>{keyEntry}</div>
-        <input
-          type="text"
-          id="inputField"
-          // onKeyDown={(e) => setKeyEntry(keyEntry.concat(e.key))}
-          onKeyDown={handleKeyboardInput}
-        />
-      </div>
-      <button onClick={createOscillator}>Add New Oscillator</button>
     </div>
   );
 };
