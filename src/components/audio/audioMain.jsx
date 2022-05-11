@@ -3,8 +3,27 @@ import "../../SynthPad.css";
 import Audio from "./audioContext";
 
 const AudioMain = () => {
+  const [keyEntry, setKeyEntry] = useState("");
+  const [freqSubmit, setFreqSubmit] = useState("");
+
+  // initialize state for OscillatorNodes
+
+  const handleKeyboardInput = (e) => {
+    if (e.key === "Enter") {
+      setFreqSubmit(keyEntry);
+      const freq = parseInt(freqSubmit);
+      createOscillator(freq);
+      setKeyEntry("");
+      document.getElementById("inputField").value = "";
+    } else if (e.key === "Backspace") {
+      setKeyEntry(keyEntry.slice(0, -1));
+    } else if (isFinite(e.key)) {
+      setKeyEntry(keyEntry.concat(e.key));
+    }
+  };
+
   // set state to represent initial value of masterGainNode
-  const [masterGainValue, setMasterGainValue] = useState(0);
+  const [masterGainValue, setMasterGainValue] = useState(1);
 
   // initialize state for OscillatorNodes
   const [oscillatorNodes, setOscillatorNodes] = useState([]);
@@ -28,6 +47,13 @@ const AudioMain = () => {
     setMasterGainValue(e.target.value / 100);
   };
 
+  //   const handleUsernameSubmission = (e) => {
+  //     if (e) e.preventDefault();
+  //     const freq = parseInt(this.refs.usernameItem.value);
+
+  //     createOscillator(freq);
+  //   };
+
   const addOscillatorNode = () => {
     // Create a GainNode for the oscillator, set it to 0 volume and connect it to masterGainNode
     const oscillatorGainNode = Audio.context.createGain();
@@ -48,6 +74,43 @@ const AudioMain = () => {
       frequency: oscillatorNode.frequency.value,
       type: oscillatorNode.type,
       gain: 0,
+    };
+
+    setOscillatorNodes([...oscillatorNodes, oscillatorNodeValues]);
+
+    // Set selectedOscillatorNode to the new oscillator index.
+    setSelectedOscillatorNodeIndex(oscillatorNodes.length);
+  };
+
+  const createOscillator = () => {
+    // Create a GainNode for the oscillator, set it to 0 volume and connect it to masterGainNode
+    const inputFrequency = 200;
+    const oscillatorGainNode = Audio.context.createGain();
+    oscillatorGainNode.gain.setValueAtTime(1, Audio.context.currentTime);
+    oscillatorGainNode.connect(Audio.masterGainNode);
+
+    // Create OscillatorNode, connect it to its GainNode, and make it start playing.
+    const oscillatorNode = Audio.context.createOscillator();
+    oscillatorNode.type = "saw";
+    oscillatorNode.frequency = inputFrequency;
+
+    oscillatorNode.frequency.setValueAtTime(
+      inputFrequency,
+      Audio.context.currentTime
+    );
+    oscillatorNode.gain = 0.5;
+    oscillatorNode.connect(oscillatorGainNode);
+    oscillatorNode.start();
+
+    // Store the nodes along with their values in state.
+    // Note: When an oscillator is created, frequency is set to 440,
+    // and type is set to 'sine' by default.
+    const oscillatorNodeValues = {
+      oscillatorNode: oscillatorNode,
+      oscillatorGainNode: oscillatorGainNode,
+      frequency: oscillatorNode.frequency.value,
+      type: oscillatorNode.type,
+      gain: 0.5,
     };
 
     setOscillatorNodes([...oscillatorNodes, oscillatorNodeValues]);
@@ -214,6 +277,18 @@ const AudioMain = () => {
       >
         Play
       </button>
+
+      <div>63</div>
+      <div className="Keyboard">
+        <div>{keyEntry}</div>
+        <input
+          type="text"
+          id="inputField"
+          // onKeyDown={(e) => setKeyEntry(keyEntry.concat(e.key))}
+          onKeyDown={handleKeyboardInput}
+        />
+      </div>
+      <button onClick={createOscillator}>Add New Oscillator</button>
     </div>
   );
 };
