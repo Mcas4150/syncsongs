@@ -7,7 +7,7 @@
   justify-content: center;
   text-align: center;
   /* background-color: var(--green); */
-  background-color: forestgreen;
+
   font-weight: 600;
   color: gainsboro;
 }
@@ -16,4 +16,24 @@
   display: flex;
   justify-content: center;
   flex-direction: row;
+}
+
+.color-maroon {
+  background-color: #852a2f;
+}
+
+.color-blue {
+  background-color: #526283;
+}
+
+.color-green {
+  background-color: #578266;
+}
+
+.color-brown {
+  background-color: #72693e;
+}
+
+.color-grey {
+  background-color: #83878a;
 }

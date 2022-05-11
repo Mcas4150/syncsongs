@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 const Keyboard = () => {
   // set state to represent initial value of masterGainNode
+
   const [keyEntry, setKeyEntry] = useState("");
   const [freqSubmit, setFreqSubmit] = useState("");
 

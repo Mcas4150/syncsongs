@@ -10,30 +10,30 @@ const AnimationMain = () => {
   const q = gsap.utils.selector(containerRef);
 
   useEffect(() => {
-    const animation1 = gsap.to(boxRef.current, {
+    gsap.to(boxRef.current, {
       duration: 3,
       y: -100,
       // rotation: "+=360",
     });
-  });
-
-  useEffect(() => {
-    gsap.to(boxRef.current, { duration: 1, y: 15 });
   }, [count]);
+
+  // useEffect(() => {
+  //   // gsap.to(boxRef.current, { duration: 1, y: 15 });
+  // });
 
   return (
     <div className="AnimationMain" ref={containerRef}>
       <div className="waterfallContainer">
-        <div className="box" ref={boxRef}>
+        <div className="box color-blue" ref={boxRef}>
           x 2
         </div>
-        <div className="box" ref={boxRef}>
+        <div className="box color-maroon" ref={boxRef}>
           x 3
         </div>
-        <div className="box" ref={boxRef}>
+        <div className="box color-brown" ref={boxRef}>
           x 4
         </div>
-        <div className="box" ref={boxRef}>
+        <div className="box color-green" ref={boxRef}>
           x 5
         </div>
       </div>
