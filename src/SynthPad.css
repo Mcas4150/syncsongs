@@ -1,20 +1,18 @@
 #root {
-    display: flex;
-    justify-content: center;
-    margin: 25px;
-    height: 100vh;
-  }
-  
-  .AudioMain {
-      height: 100%;
-    display: grid;
-    width: 300px;
-    grid-template-columns: auto auto;
-    background-color: #5d5D5D
-  }
-  
-  .App * {
-    height: 50px;
-    margin: 5px;
-  }
-  
+  display: flex;
+  justify-content: center;
+  margin: 25px;
+  height: 100vh;
+}
+
+.AudioMain {
+  height: 100%;
+  display: grid;
+  width: 300px;
+  grid-template-columns: auto auto;
+  background-color: #5d5d5d;
+}
+
+.App * {
+  margin: 5px;
+}

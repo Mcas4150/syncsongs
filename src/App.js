@@ -1,12 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
 import AudioMain from "./components/audio/audioMain.jsx";
+import Keyboard from "./components/keyboard/keyboard.jsx";
 
 function App() {
   return (
     <div className="App">
-   
-     <AudioMain/>
+      <AudioMain />
+      <Keyboard />
     </div>
   );
 }
