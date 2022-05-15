@@ -94,10 +94,10 @@ const AudioMain = () => {
     oscillatorNode.type = "saw";
     oscillatorNode.frequency = inputFrequency;
 
-    oscillatorNode.frequency.setValueAtTime(
-      inputFrequency,
-      Audio.context.currentTime
-    );
+    // oscillatorNode.frequency.setValueAtTime(
+    //   inputFrequency,
+    //   Audio.context.currentTime
+    // );
     oscillatorNode.gain = 0.5;
     oscillatorNode.connect(oscillatorGainNode);
     oscillatorNode.start();
@@ -184,6 +184,7 @@ const AudioMain = () => {
       Audio.context.currentTime,
       0.001
     );
+    console.log({ oscillatorNodes });
   };
 
   // Fade out by .001 seconds to avoid click
@@ -204,6 +205,7 @@ const AudioMain = () => {
   return (
     <div className="AudioMain">
       <div>63</div>
+      {/* <div>{oscillatorNodes}</div> */}
       <div>
         <div className="Keyboard">
           <div>{keyEntry}</div>
@@ -273,7 +275,7 @@ const AudioMain = () => {
           className="oscillator-volume"
         />
       </div>
-      <div>
+      {/* <div>
         <p>Master Volume: </p>
         <input
           type="range"
@@ -283,7 +285,7 @@ const AudioMain = () => {
           onChange={changeMasterVolume}
           className="pad-volume"
         />
-      </div>
+      </div> */}
       <button
         // onClick={play}
         onMouseDown={play}
