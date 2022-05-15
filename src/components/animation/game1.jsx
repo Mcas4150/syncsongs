@@ -8,6 +8,7 @@ import {
   getCorrectAnswer,
 } from "../../helpers/gameplay";
 import Counter from "./Counter";
+import Timer from "./Timer";
 import "../../Animate.css";
 import { Tween } from "gsap/gsap-core";
 
@@ -45,7 +46,7 @@ const GameOne = () => {
   const [counter, setCounter] = useState(60);
   const boxRef = useRef();
 
-  const keyRef = useRef("");
+  const keyRef = useRef(0);
 
   const containerRef = useRef();
   const q = gsap.utils.selector(containerRef);
@@ -58,15 +59,19 @@ const GameOne = () => {
   // initialize state for OscillatorNodes
 
   const handleKeyboardInput = (e) => {
+    console.log(e.target.value);
+    console.log(keyRef.current.value);
+    console.log(e.key);
     if (e.key === "Enter") {
-      setFreqSubmit(keyEntry);
-      // setKeyEntry("");
+      console.log("Enter");
+      setFreqSubmit(keyRef.current.value);
       document.getElementById("inputField").value = "";
-    } else if (e.key === "Backspace") {
-      // setKeyEntry(keyEntry.slice(0, -1));
-    } else if (isFinite(e.key)) {
-      // setKeyEntry(keyEntry.concat(e.key));
     }
+    // else if (e.key === "Backspace") {
+    //   // setKeyEntry(keyEntry.slice(0, -1));
+    // } else if (isFinite(e.key)) {
+    //   // setKeyEntry(keyEntry.concat(e.key));
+    // }
   };
   // useEffect(() => {
   //   gsap.to(boxRef.current, {
@@ -83,19 +88,13 @@ const GameOne = () => {
   // }, [counter]);
   // let newCorrectAnswer = getCorrectAnswer(operation,newRandNums.num1,newRandNums.num2);
 
-  const onEnter = ({ currentTarget }) => {
-    gsap.to(currentTarget, { backgroundColor: "#e77614", scale: 1.2 });
-  };
-
-  const onLeave = ({ currentTarget }) => {
-    gsap.to(currentTarget, { backgroundColor: "#28a92b", scale: 1 });
-  };
-
   const onAnswer = (points) => setScore(score + points);
-
   // const [correctAnswer, setCorrectAnswer] = useState(getCorrectAnswer(props.operation,operands.num1,operands.num2));
 
-  let displayAnswer = checkAnswer(input, correctAnswer);
+  // let displayAnswer = checkAnswer(input, correctAnswer);
+
+  let displayAnswer = checkAnswer(freqSubmit, correctAnswer);
+
   if (displayAnswer === "correct") {
     setInput("");
     //setUserAnswer('');
@@ -116,27 +115,6 @@ const GameOne = () => {
 
     setCorrectAnswer(newCorrectAnswer);
   }
-
-  const Timer = ({ time, interval = 1000, onEnd }) => {
-    const [internalTime, setInternalTime] = useState(time);
-    const timerRef = useRef(time);
-    const timeRef = useRef(time);
-    useEffect(() => {
-      if (internalTime === 0 && onEnd) {
-        onEnd();
-      }
-    }, [internalTime, onEnd]);
-    useEffect(() => {
-      timerRef.current = setInterval(() => {
-        setInternalTime((timeRef.current -= interval));
-      }, interval);
-      return () => {
-        clearInterval(timerRef.current);
-      };
-    }, [interval]);
-    return <React.Fragment>{internalTime / 1000}</React.Fragment>;
-  };
-  // const handleKeyboardInput = (e) => {
 
   function Box({ points }) {
     // const boxRef = useRef();
@@ -243,20 +221,6 @@ const GameOne = () => {
   //
 
   //numbers
-  const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
-  const numberButtons = numbers.map((number) => (
-    <NumberButton
-      value={number}
-      prevValue={input}
-      key={number}
-      handleClick={setInput}
-    />
-  ));
-
-  const gridStyle = {
-    width: "300px",
-    margin: "0 auto",
-  };
 
   return (
     <div className="GameOne">
@@ -276,10 +240,11 @@ const GameOne = () => {
             {/* <div className="boxx">box: </div> */}
             <div className="boxx">answer: {correctAnswer}</div>
             <div className="boxx">score: {score}</div>
-            <div className="boxx">keyEntry: {keyEntry}</div>
+            {/* <div className="boxx">keyEntry: {keyEntry}</div> */}
+            <div className="boxx">keyRef: {keyRef.current.value}</div>
             <div className="boxx">freqsubmit: {freqSubmit}</div>{" "}
-            <div>Countdown: {counter}</div>
-            <div className="boxx">newcount: {newCount}</div>
+            {/* <div>Countdown: {counter}</div>
+            <div className="boxx">newcount: {newCount}</div> */}
             <Timer time={TIME_LIMIT} onEnd={() => setPlaying(false)} />
           </div>
 
@@ -287,13 +252,12 @@ const GameOne = () => {
             <input
               type="text"
               id="inputField"
-              useRef={keyRef}
+              ref={keyRef}
               // onKeyDown={(e) => setKeyEntry(keyEntry.concat(e.key))}
               onKeyDown={handleKeyboardInput}
             />
+            {/* <button onClick={handleKeyboardInput} /> */}
           </div>
-
-          <div style={gridStyle}>{numberButtons}</div>
         </React.Fragment>
       )}
     </div>
