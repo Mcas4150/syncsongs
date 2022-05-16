@@ -54,9 +54,8 @@ const Box = ({ points, operands, index }) => {
 
   return (
     <div className="box " ref={boxRef} style={boxColor}>
-      {/* {operands.num1}
-      +{operands.num2} */}
-      {index}
+      {operands.num1}+{operands.num2}
+      {/* {index} */}
     </div>
   );
 };

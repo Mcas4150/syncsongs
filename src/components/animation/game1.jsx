@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
-import styled from "@emotion/styled";
+
 import { gsap } from "gsap";
 import {
-  checkAnswer,
+  checkAnswers,
   getRandNumbers,
   getCorrectAnswer,
 } from "../../helpers/gameplay";
@@ -27,12 +27,16 @@ const GameOne = () => {
   const [playing, setPlaying] = useState(false);
   const [finished, setFinished] = useState(false);
   const [score, setScore] = useState(0);
-
   const [boxes, setBoxes] = useState(generateBoxes(5));
-
-  const [operands, setOperands] = useState({ num1: 1, num2: 1 });
+  const [operandsArray, setOperandsArray] = useState([
+    { num1: 1, num2: 1 },
+    { num1: 2, num2: 3 },
+    { num1: 4, num2: 5 },
+    { num1: 2, num2: 4 },
+    { num1: 8, num2: 3 },
+  ]);
+  const [correctAnswers, setCorrectAnswers] = useState([2, 5, 9, 6, 11]);
   const [freqSubmit, setFreqSubmit] = useState(0);
-  const [correctAnswer, setCorrectAnswer] = useState(2);
 
   const startGame = () => {
     setScore(0);
@@ -48,24 +52,38 @@ const GameOne = () => {
 
   // const onAnswer = (points) => setScore(score + points);
 
-  const GenerateNewEquation = () => {
+  const GenerateNewEquation = ({ answerIndex }) => {
+    //new operands at index
+    console.dir("og operands:" + operandsArray);
     let newRandNums = getRandNumbers(operation, 0, maxNumber);
-    setOperands(newRandNums);
+    const newOperands = [...operandsArray];
+    newOperands[answerIndex] = newRandNums;
+    setOperandsArray(newOperands);
+    console.table("new randNums:" + JSON.stringify(newRandNums));
+    console.table("new operands:" + JSON.stringify(operandsArray));
+
+    // new answer at index
+    console.table("og answers:" + correctAnswers);
     let newCorrectAnswer = getCorrectAnswer(
       operation,
       newRandNums.num1,
       newRandNums.num2
     );
-
-    setCorrectAnswer(newCorrectAnswer);
+    const newCorrentAnswers = [...correctAnswers];
+    newCorrentAnswers[answerIndex] = newCorrectAnswer;
+    setCorrectAnswers(newCorrentAnswers);
+    console.table("new correctAnswer:" + JSON.stringify(newCorrectAnswer));
+    console.table("new answers:" + correctAnswers);
   };
 
-  let displayAnswer = checkAnswer(freqSubmit, correctAnswer);
-
-  if (displayAnswer === "correct") {
-    setScore(score + 1);
-    GenerateNewEquation();
-  }
+  useEffect(() => {
+    let answerIndex = checkAnswers(freqSubmit, correctAnswers);
+    if (answerIndex !== "incorrect") {
+      console.log(answerIndex);
+      GenerateNewEquation(answerIndex);
+      setScore(score + 1);
+    }
+  }, [freqSubmit]);
 
   return (
     <div className="GameOne">
@@ -78,11 +96,11 @@ const GameOne = () => {
                 index={index}
                 points={points}
                 speed={speed}
-                operands={operands}
+                operands={operandsArray[index]}
               />
             ))}
           </div>
-          <div className="boxx">answer: {correctAnswer}</div>
+
           <div className="boxx">score: {score}</div>
           <Timer time={TIME_LIMIT} onEnd={endGame} score={score} />
 
