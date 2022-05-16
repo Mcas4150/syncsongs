@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const Timer = ({ time, interval = 1000, onEnd }) => {
+const Timer = ({ time, interval = 1000, onEnd, score }) => {
   const [internalTime, setInternalTime] = useState(time);
   const timerRef = useRef(time);
   const timeRef = useRef(time);
@@ -17,6 +17,10 @@ const Timer = ({ time, interval = 1000, onEnd }) => {
       clearInterval(timerRef.current);
     };
   }, [interval]);
+
+  useEffect(() => {
+    setInternalTime((timeRef.current += 2000));
+  }, [score]);
   return <React.Fragment>{internalTime / 1000}</React.Fragment>;
 };
 

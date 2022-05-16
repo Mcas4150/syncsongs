@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import styled from "@emotion/styled";
 import { gsap } from "gsap";
 import {
@@ -17,15 +17,29 @@ const GameOne = () => {
   const maxNumber = 25;
 
   const [playing, setPlaying] = useState(false);
+  const [finished, setFinished] = useState(false);
   const [score, setScore] = useState(0);
+
   const [operands, setOperands] = useState({ num1: 1, num2: 1 });
   const [freqSubmit, setFreqSubmit] = useState(0);
   const [correctAnswer, setCorrectAnswer] = useState(2);
-  const [counter, setCounter] = useState(60);
   const boxRef = useRef();
   const keyRef = useRef(0);
 
+  // GSAP Timeline
   var tl = gsap.timeline({ repeat: 2, repeatDelay: 1 });
+
+  const startGame = () => {
+    setScore(0);
+    setPlaying(true);
+    setFinished(false);
+    keyRef.current.focus();
+  };
+
+  const endGame = () => {
+    setPlaying(false);
+    setFinished(true);
+  };
 
   const handleKeyboardInput = (e) => {
     if (e.key === "Enter") {
@@ -35,13 +49,10 @@ const GameOne = () => {
   };
 
   const onAnswer = (points) => setScore(score + points);
-  // const [correctAnswer, setCorrectAnswer] = useState(getCorrectAnswer(props.operation,operands.num1,operands.num2));
 
-  const generateNewEquation = () => {
+  const GenerateNewEquation = () => {
     let newRandNums = getRandNumbers(operation, 0, maxNumber);
-
     setOperands(newRandNums);
-
     let newCorrectAnswer = getCorrectAnswer(
       operation,
       newRandNums.num1,
@@ -55,8 +66,7 @@ const GameOne = () => {
 
   if (displayAnswer === "correct") {
     setScore(score + 1);
-    setCounter(counter + 5);
-    generateNewEquation();
+    GenerateNewEquation();
   }
 
   function Box({ points }) {
@@ -75,16 +85,14 @@ const GameOne = () => {
         duration: 3,
         // yoyo: true,
         repeat: -1,
+
         onRepeat: () => {
           pointsRef.current = Math.floor(
             Math.max(pointsRef.current * POINTS_MULTIPLIER, 10)
           );
-          // generateNewEquation();
+          //GenerateNewEquation();
         },
       });
-      // return () => {
-      //   boxRef.current.kill();
-      // };
     }, []);
 
     return (
@@ -101,15 +109,11 @@ const GameOne = () => {
       {playing && (
         <React.Fragment>
           <Box points={AnswerPoints} onAnswer={onAnswer} />
-
           <div className="boxContainer">
-            {/* <div className="boxx">box: {boxProblem}</div> */}
             <div className="boxx">answer: {correctAnswer}</div>
             <div className="boxx">score: {score}</div>
-            <div className="boxx">freqsubmit: {freqSubmit}</div>{" "}
-            <Timer time={TIME_LIMIT} onEnd={() => setPlaying(false)} />
+            <Timer time={TIME_LIMIT} onEnd={endGame} score={score} />
           </div>
-
           <div className="Keyboard">
             <input
               type="text"
@@ -119,11 +123,14 @@ const GameOne = () => {
             />
           </div>
         </React.Fragment>
-      )}{" "}
-      {!playing && <h1>Math Game</h1>}
-      <button onClick={() => setPlaying(!playing)}>
-        {playing ? "Stop" : "Start"}
-      </button>
+      )}
+      {!playing && !finished && (
+        <React.Fragment>
+          <h1>Math Game</h1>
+          <button onClick={startGame}>Start Game</button>
+        </React.Fragment>
+      )}
+      {finished && <button onClick={startGame}>Play Again</button>}
     </div>
   );
 };
