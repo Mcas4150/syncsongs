@@ -34,9 +34,6 @@ const GameOne = () => {
   const [freqSubmit, setFreqSubmit] = useState(0);
   const [correctAnswer, setCorrectAnswer] = useState(2);
 
-  // GSAP Timeline
-  var tl = gsap.timeline({ repeat: 2 });
-
   const startGame = () => {
     setScore(0);
     setBoxes(generateBoxes(5));
@@ -78,10 +75,10 @@ const GameOne = () => {
             {boxes.map(({ speed, points }, index) => (
               <Box
                 key={index}
+                index={index}
                 points={points}
                 speed={speed}
                 operands={operands}
-                tl={tl}
               />
             ))}
           </div>
