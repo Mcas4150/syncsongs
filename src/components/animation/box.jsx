@@ -5,7 +5,7 @@ import { gsap } from "gsap";
 const Box = ({ points, operands, tl }) => {
   const boxRef = useRef();
   const pointsRef = useRef(points);
-  const durationRef = useRef(Math.random() * 4 + 1);
+  const durationRef = useRef(Math.random() * 6 + 2);
 
   const POINTS_MULTIPLIER = 0.9;
 
@@ -13,22 +13,19 @@ const Box = ({ points, operands, tl }) => {
 
   useEffect(() => {
     tl.set(boxRef.current, {
-      y: -200,
-      // yPercent: 100,
+      y: -400,
       scale: 1,
     });
     tl.to(boxRef.current, {
       y: 0,
-      // yPercent: 0,
-      scale: 0.8,
-      duration: Math.random() * 4 + 1,
+      scale: 0.7,
+      duration: gsap.utils.random(2, 6),
       repeat: -1,
 
       onRepeat: () => {
         pointsRef.current = Math.floor(
           Math.max(pointsRef.current * POINTS_MULTIPLIER, 10)
         );
-
         //GenerateNewEquation();
       },
     });
