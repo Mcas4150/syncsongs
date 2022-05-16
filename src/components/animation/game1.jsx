@@ -41,6 +41,11 @@ const GameOne = () => {
 
   const startGame = () => {
     setScore(0);
+    GenerateNewEquation(0);
+    GenerateNewEquation(1);
+    GenerateNewEquation(2);
+    GenerateNewEquation(3);
+    GenerateNewEquation(4);
     setBoxes(generateBoxes(5));
     setPlaying(true);
     setFinished(false);
@@ -55,7 +60,6 @@ const GameOne = () => {
 
   const GenerateNewEquation = (newIndex) => {
     //new operands at index
-    console.dir("answerIndex2:" + newIndex);
     console.dir("og operands:" + operandsArray);
 
     let newRandNums = getRandNumbers(operation, 0, maxNumber);
@@ -74,7 +78,6 @@ const GameOne = () => {
 
     console.table("new operands:" + JSON.stringify(newOperands));
     setOperandsArray(newOperands);
-    console.table("nupdated operands:" + JSON.stringify(operandsArray));
 
     // new answer at index
     console.table("og answers:" + correctAnswers);
@@ -84,6 +87,7 @@ const GameOne = () => {
       newRandNums.num1,
       newRandNums.num2
     );
+    console.table("new correctAnswer:" + JSON.stringify(newCorrectAnswer));
 
     const newCorrectAnswers = correctAnswers.map((item, index) => {
       if (index === newIndex) {
@@ -95,10 +99,6 @@ const GameOne = () => {
 
     console.table("new correctAnswers:" + JSON.stringify(newCorrectAnswers));
     setCorrectAnswers(newCorrectAnswers);
-    console.table("new correctAnswer:" + JSON.stringify(newCorrectAnswer));
-
-    // const newCorrectAnswers = [...correctAnswers];
-    // newCorrectAnswers[answerIndex] = newCorrectAnswer;
   };
 
   useEffect(() => {

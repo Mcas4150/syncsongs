@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import styled from "@emotion/styled";
 
 const Keyboard = ({ setFreqSubmit }) => {
   const keyRef = useRef(0);
@@ -13,7 +14,7 @@ const Keyboard = ({ setFreqSubmit }) => {
 
   return (
     <div className="Keyboard">
-      <input
+      <Input
         type="text"
         id="inputField"
         ref={keyRef}
@@ -24,3 +25,8 @@ const Keyboard = ({ setFreqSubmit }) => {
 };
 
 export default Keyboard;
+
+const Input = styled.input`
+  height: 30px;
+  font-size: 18px;
+`;
