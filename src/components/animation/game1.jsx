@@ -37,6 +37,7 @@ const GameOne = () => {
   ]);
   const [correctAnswers, setCorrectAnswers] = useState([2, 5, 9, 6, 11]);
   const [freqSubmit, setFreqSubmit] = useState(0);
+  const [answerIndex, setAnswerIndex] = useState(-1);
 
   const startGame = () => {
     setScore(0);
@@ -52,34 +53,58 @@ const GameOne = () => {
 
   // const onAnswer = (points) => setScore(score + points);
 
-  const GenerateNewEquation = ({ answerIndex }) => {
+  const GenerateNewEquation = (newIndex) => {
     //new operands at index
+    console.dir("answerIndex2:" + newIndex);
     console.dir("og operands:" + operandsArray);
+
     let newRandNums = getRandNumbers(operation, 0, maxNumber);
-    const newOperands = [...operandsArray];
-    newOperands[answerIndex] = newRandNums;
+
+    const newOperands = operandsArray.map((item, index) => {
+      if (index === newIndex) {
+        const updatedOperand = {
+          ...item,
+          num1: newRandNums.num1,
+          num2: newRandNums.num2,
+        };
+        return updatedOperand;
+      }
+      return item;
+    });
+
+    console.table("new operands:" + JSON.stringify(newOperands));
     setOperandsArray(newOperands);
-    console.table("new randNums:" + JSON.stringify(newRandNums));
-    console.table("new operands:" + JSON.stringify(operandsArray));
+    console.table("nupdated operands:" + JSON.stringify(operandsArray));
 
     // new answer at index
     console.table("og answers:" + correctAnswers);
+
     let newCorrectAnswer = getCorrectAnswer(
       operation,
       newRandNums.num1,
       newRandNums.num2
     );
-    const newCorrentAnswers = [...correctAnswers];
-    newCorrentAnswers[answerIndex] = newCorrectAnswer;
-    setCorrectAnswers(newCorrentAnswers);
+
+    const newCorrectAnswers = correctAnswers.map((item, index) => {
+      if (index === newIndex) {
+        const updatedAnswer = newCorrectAnswer;
+        return updatedAnswer;
+      }
+      return item;
+    });
+
+    console.table("new correctAnswers:" + JSON.stringify(newCorrectAnswers));
+    setCorrectAnswers(newCorrectAnswers);
     console.table("new correctAnswer:" + JSON.stringify(newCorrectAnswer));
-    console.table("new answers:" + correctAnswers);
+
+    // const newCorrectAnswers = [...correctAnswers];
+    // newCorrectAnswers[answerIndex] = newCorrectAnswer;
   };
 
   useEffect(() => {
     let answerIndex = checkAnswers(freqSubmit, correctAnswers);
     if (answerIndex !== "incorrect") {
-      console.log(answerIndex);
+      console.dir("answerIndex1:" + answerIndex);
       GenerateNewEquation(answerIndex);
       setScore(score + 1);
     }
