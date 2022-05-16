@@ -11,16 +11,24 @@ import Box from "./box";
 import Timer from "./Timer";
 import "../../Animate.css";
 
+const generateBoxes = (amount) =>
+  new Array(amount).fill().map(() => ({
+    speed: gsap.utils.random(2, 6),
+    points: 100,
+  }));
+
 const GameOne = () => {
   const TIME_LIMIT = 30000;
 
-  const AnswerPoints = 25;
+  // const AnswerPoints = 25;
   const operation = "+";
   const maxNumber = 25;
 
   const [playing, setPlaying] = useState(false);
   const [finished, setFinished] = useState(false);
   const [score, setScore] = useState(0);
+
+  const [boxes, setBoxes] = useState(generateBoxes(5));
 
   const [operands, setOperands] = useState({ num1: 1, num2: 1 });
   const [freqSubmit, setFreqSubmit] = useState(0);
@@ -31,6 +39,7 @@ const GameOne = () => {
 
   const startGame = () => {
     setScore(0);
+    setBoxes(generateBoxes(5));
     setPlaying(true);
     setFinished(false);
   };
@@ -66,10 +75,15 @@ const GameOne = () => {
       {playing && (
         <React.Fragment>
           <div className="boxContainer">
-            <Box points={AnswerPoints} operands={operands} tl={tl} />
-            <Box points={AnswerPoints} operands={operands} tl={tl} />
-            <Box points={AnswerPoints} operands={operands} tl={tl} />
-            <Box points={AnswerPoints} operands={operands} tl={tl} />
+            {boxes.map(({ speed, points }, index) => (
+              <Box
+                key={index}
+                points={points}
+                speed={speed}
+                operands={operands}
+                tl={tl}
+              />
+            ))}
           </div>
           <div className="boxx">answer: {correctAnswer}</div>
           <div className="boxx">score: {score}</div>
