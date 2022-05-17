@@ -1,17 +1,48 @@
+import React, { useState, useEffect, useRef } from "react";
 import styled from "@emotion/styled";
+import { gsap } from "gsap";
 
 const TitleText = ({ text }) => {
+  const animRef = useRef(null);
+  const charRef = useRef();
+  const titleRef = useRef();
+  const q = gsap.utils.selector(charRef);
+
+  // GSAP Timeline
+  var tl = gsap.timeline();
+
+  useEffect(() => {
+    animRef.current = tl.set(titleRef.current, {
+      y: "0",
+      top: 0,
+      opacity: 1,
+      scale: 1,
+    });
+    tl.to(titleRef.current, {
+      top: "50%",
+      y: "-100",
+      ease: "elastic.out",
+      duration: gsap.utils.random(1, 3),
+    });
+  }, []);
+
   return (
-    <Title>
+    <Title ref={titleRef}>
       {text.split("").map(function (char, index) {
         let randomColor = Math.random().toString(16).substr(-6);
         let style = {
           color: `#${randomColor}`,
         };
         return (
-          <span aria-hidden="true" key={index} style={style}>
+          <Char
+            aria-hidden="true"
+            id={"char"}
+            key={index}
+            style={style}
+            ref={charRef}
+          >
             {char}
-          </span>
+          </Char>
         );
       })}
     </Title>
@@ -23,4 +54,11 @@ export default TitleText;
 const Title = styled.div`
   font-size: 150px;
   font-family: bubbleFont;
+  display: flex;
+  max-width: 80vw;
+`;
+
+const Char = styled.span`
+  display: block;
+  max-width: 20vw;
 `;

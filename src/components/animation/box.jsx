@@ -87,6 +87,7 @@ const Box = ({
     tl.to(boxRef.current, {
       y: "60vh",
       scale: 0.7,
+      ease: "power1.in",
       duration: gsap.utils.random(3, 8),
       force3D: true,
       repeat: -1,

@@ -9,7 +9,6 @@ import TitleText from "../animation/TitleText";
 
 const generateBoxes = (amount) =>
   new Array(amount).fill().map(() => ({
-    speed: gsap.utils.random(2, 6),
     points: 100,
   }));
 
@@ -41,13 +40,12 @@ const GameOne = () => {
       {playing && (
         <React.Fragment>
           <PlayContainer id="boxContainer">
-            {boxes.map(({ speed, points }, index) => (
+            {boxes.map(({ points }, index) => (
               <Box
                 operation={operation}
                 maxNumber={maxNumber}
                 key={index}
                 points={points}
-                speed={speed}
                 solutionSubmit={solutionSubmit}
                 score={score}
                 setScore={setScore}
@@ -55,7 +53,6 @@ const GameOne = () => {
             ))}
           </PlayContainer>
           <ControlsContainer>
-            {" "}
             <Timer time={TIME_LIMIT} onEnd={endGame} score={score} />
             <Keyboard setSolutionSubmit={setSolutionSubmit} />
             <Score score={score} />
@@ -78,7 +75,7 @@ const GameOne = () => {
           </Button>
 
           <Credits>
-            Credits:{" "}
+            Credits:
             <Link href={"https://github.com/Mcas4150"}>Mike Cassidy</Link>
           </Credits>
         </Menu>
@@ -98,13 +95,6 @@ const Menu = styled.div`
 
 const Button = styled.button`
   margin: 25px;
-`;
-
-const Data = styled.div`
-  margin: 0 25px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
 `;
 
 const Credits = styled.div`
