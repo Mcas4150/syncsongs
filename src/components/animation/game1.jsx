@@ -1,11 +1,6 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import styled from "@emotion/styled";
 import { gsap } from "gsap";
-import {
-  checkAnswers,
-  getRandNumbers,
-  getCorrectAnswer,
-} from "../../helpers/gameplay";
 import Keyboard from "../game/keyboard";
 import Box from "./box";
 import Score from "./Score";
@@ -29,18 +24,7 @@ const GameOne = () => {
   const [finished, setFinished] = useState(false);
   const [score, setScore] = useState(0);
   const [boxes, setBoxes] = useState(generateBoxes(5));
-  const [operandsArray, setOperandsArray] = useState([
-    { num1: 1, num2: 1 },
-    { num1: 2, num2: 3 },
-    { num1: 4, num2: 5 },
-    { num1: 2, num2: 4 },
-    { num1: 8, num2: 3 },
-  ]);
-  const [correctAnswers, setCorrectAnswers] = useState([2, 5, 9, 6, 11]);
   const [solutionSubmit, setSolutionSubmit] = useState(0);
-  const [answerIndex, setAnswerIndex] = useState(-1);
-
-  //
 
   const startGame = () => {
     setScore(0);
@@ -54,60 +38,6 @@ const GameOne = () => {
     setFinished(true);
   };
 
-  // const onAnswer = (points) => setScore(score + points);
-
-  const GenerateNewEquation = (newIndex) => {
-    //new operands at index
-    console.dir("og operands:" + operandsArray);
-
-    let newRandNums = getRandNumbers(operation, 0, maxNumber);
-
-    const newOperands = operandsArray.map((item, index) => {
-      if (index === newIndex) {
-        const updatedOperand = {
-          ...item,
-          num1: newRandNums.num1,
-          num2: newRandNums.num2,
-        };
-        return updatedOperand;
-      }
-      return item;
-    });
-
-    console.table("new operands:" + JSON.stringify(newOperands));
-    setOperandsArray(newOperands);
-
-    // new answer at index
-    console.table("og answers:" + correctAnswers);
-
-    let newCorrectAnswer = getCorrectAnswer(
-      operation,
-      newRandNums.num1,
-      newRandNums.num2
-    );
-    console.table("new correctAnswer:" + JSON.stringify(newCorrectAnswer));
-
-    const newCorrectAnswers = correctAnswers.map((item, index) => {
-      if (index === newIndex) {
-        const updatedAnswer = newCorrectAnswer;
-        return updatedAnswer;
-      }
-      return item;
-    });
-
-    console.table("new correctAnswers:" + JSON.stringify(newCorrectAnswers));
-    setCorrectAnswers(newCorrectAnswers);
-  };
-
-  useEffect(() => {
-    let answerIndex = checkAnswers(solutionSubmit, correctAnswers);
-    if (answerIndex !== "incorrect") {
-      console.dir("answerIndex1:" + answerIndex);
-      GenerateNewEquation(answerIndex);
-      setScore(score + 1);
-    }
-  }, [solutionSubmit]);
-
   return (
     <GameContainer>
       {playing && (
@@ -115,13 +45,14 @@ const GameOne = () => {
           <PlayContainer id="boxContainer">
             {boxes.map(({ speed, points }, index) => (
               <Box
+                operation={operation}
+                maxNumber={maxNumber}
                 key={index}
-                index={index}
                 points={points}
                 speed={speed}
-                operands={operandsArray[index]}
-                GenerateNewEquation={GenerateNewEquation}
                 solutionSubmit={solutionSubmit}
+                score={score}
+                setScore={setScore}
               />
             ))}
           </PlayContainer>

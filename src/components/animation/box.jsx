@@ -1,14 +1,27 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "@emotion/styled";
+import {
+  checkAnswers,
+  getRandNumbers,
+  getCorrectAnswer,
+} from "../../helpers/gameplay";
 import { gsap } from "gsap";
 // import "../../Animate.css";
 
-const Box = ({ points, operands, index, GenerateNewEquation }) => {
+const Box = ({
+  operation,
+  maxNumber,
+  points,
+  solutionSubmit,
+  score,
+  setScore,
+}) => {
   const boxRef = useRef();
   const pointsRef = useRef(points);
 
   const [color, setColor] = useState(Math.random().toString(16).substr(-6));
-
+  const [operands, setOperands] = useState([{ num1: 1, num2: 1 }]);
+  const [correctAnswer, setCorrectAnswer] = useState(2);
   //   let randomColor = Math.floor(Math.random() * 16777215).toString(16);
   const POINTS_MULTIPLIER = 0.9;
 
@@ -22,6 +35,28 @@ const Box = ({ points, operands, index, GenerateNewEquation }) => {
 
   const boxColor = {
     backgroundColor: "#" + color,
+  };
+
+  useEffect(() => {
+    GenerateNewEquation();
+  }, []);
+
+  useEffect(() => {
+    if (parseInt(solutionSubmit) === correctAnswer) {
+      setScore(score + 1);
+      GenerateNewEquation();
+    }
+  }, [solutionSubmit]);
+
+  const GenerateNewEquation = () => {
+    let newRandNums = getRandNumbers(operation, 0, maxNumber);
+    setOperands(newRandNums);
+    let newCorrectAnswer = getCorrectAnswer(
+      operation,
+      newRandNums.num1,
+      newRandNums.num2
+    );
+    setCorrectAnswer(newCorrectAnswer);
   };
 
   useEffect(() => {
@@ -42,7 +77,6 @@ const Box = ({ points, operands, index, GenerateNewEquation }) => {
         // generateColor();
 
         // setColor(randomColor);
-        // GenerateNewEquation(index);
       },
     });
   }, []);

@@ -1,27 +1,3 @@
-// export function checkAnswers(input, correctAnswers) {
-//   let intInput = parseInt(input);
-
-//   if (correctAnswers.includes(intInput)) {
-//     console.log("correct");
-//     return "correct";
-//   } else {
-//     console.log("incorrect");
-//     return "incorrect";
-//   }
-// }
-
-export function checkAnswers(input, correctAnswers) {
-  let intInput = parseInt(input);
-  let answerIndex = correctAnswers.indexOf(intInput);
-  if (answerIndex === -1) {
-    console.log("incorrect");
-    return "incorrect";
-  } else {
-    console.log("correct");
-    return answerIndex;
-  }
-}
-
 export function getRandNumbers(operator, low, high) {
   var num1 = randInt(low, high);
   var num2 = randInt(low, high, true);
