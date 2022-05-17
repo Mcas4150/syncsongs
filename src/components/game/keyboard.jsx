@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "@emotion/styled";
 
-const Keyboard = ({ setFreqSubmit }) => {
+const Keyboard = ({ setSolutionSubmit }) => {
   const keyRef = useRef(0);
 
   const handleKeyboardInput = (e) => {
     if (e.key === "Enter") {
       console.log("enter");
-      setFreqSubmit(keyRef.current.value);
+      setSolutionSubmit(keyRef.current.value);
       document.getElementById("inputField").value = "";
     }
   };
@@ -19,6 +19,7 @@ const Keyboard = ({ setFreqSubmit }) => {
         id="inputField"
         ref={keyRef}
         onKeyDown={handleKeyboardInput}
+        placeholder={"solve"}
       />
     </div>
   );

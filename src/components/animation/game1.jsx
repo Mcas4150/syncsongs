@@ -37,7 +37,7 @@ const GameOne = () => {
     { num1: 8, num2: 3 },
   ]);
   const [correctAnswers, setCorrectAnswers] = useState([2, 5, 9, 6, 11]);
-  const [freqSubmit, setFreqSubmit] = useState(0);
+  const [solutionSubmit, setSolutionSubmit] = useState(0);
   const [answerIndex, setAnswerIndex] = useState(-1);
 
   //
@@ -100,13 +100,13 @@ const GameOne = () => {
   };
 
   useEffect(() => {
-    let answerIndex = checkAnswers(freqSubmit, correctAnswers);
+    let answerIndex = checkAnswers(solutionSubmit, correctAnswers);
     if (answerIndex !== "incorrect") {
       console.dir("answerIndex1:" + answerIndex);
       GenerateNewEquation(answerIndex);
       setScore(score + 1);
     }
-  }, [freqSubmit]);
+  }, [solutionSubmit]);
 
   return (
     <GameContainer>
@@ -121,13 +121,14 @@ const GameOne = () => {
                 speed={speed}
                 operands={operandsArray[index]}
                 GenerateNewEquation={GenerateNewEquation}
+                solutionSubmit={solutionSubmit}
               />
             ))}
           </PlayContainer>
           <ControlsContainer>
             {" "}
             <Timer time={TIME_LIMIT} onEnd={endGame} score={score} />
-            <Keyboard setFreqSubmit={setFreqSubmit} />
+            <Keyboard setSolutionSubmit={setSolutionSubmit} />
             <Score score={score} />
           </ControlsContainer>
         </React.Fragment>
