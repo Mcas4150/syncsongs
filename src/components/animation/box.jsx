@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "@emotion/styled";
 import { getRandNumbers, getCorrectAnswer } from "../../helpers/gameplay";
 import { gsap } from "gsap";
-import "../../shapes.css";
 
 const Box = ({
   operation,
@@ -114,7 +113,7 @@ const BoxShape = styled.div`
   height: 150px;
   max-width: 15vw;
   max-height: 15vw;
-  //   border-radius: 12px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
