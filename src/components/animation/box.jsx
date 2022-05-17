@@ -17,21 +17,23 @@ const Box = ({
   setScore,
 }) => {
   const boxRef = useRef();
+  const animRef = useRef(null);
   const pointsRef = useRef(points);
 
   const [color, setColor] = useState(Math.random().toString(16).substr(-6));
   const [operands, setOperands] = useState([{ num1: 1, num2: 1 }]);
   const [correctAnswer, setCorrectAnswer] = useState(2);
-  //   let randomColor = Math.floor(Math.random() * 16777215).toString(16);
+  const [solved, setSolved] = useState(false);
+
   const POINTS_MULTIPLIER = 0.9;
 
   // GSAP Timeline
   var tl = gsap.timeline();
 
-  //   const generateColor = () => {
-  //     randomColor = Math.floor(Math.random() * 16777215).toString(16);
-  //     setColor(randomColor);
-  //   };
+  const generateColor = () => {
+    let randomColor = Math.random().toString(16).substr(-6);
+    setColor(randomColor);
+  };
 
   const boxColor = {
     backgroundColor: "#" + color,
@@ -44,9 +46,31 @@ const Box = ({
   useEffect(() => {
     if (parseInt(solutionSubmit) === correctAnswer) {
       setScore(score + 1);
-      GenerateNewEquation();
+
+      setSolved(true);
     }
   }, [solutionSubmit]);
+
+  useEffect(() => {
+    if (solved) {
+      animRef.current.pause();
+      gsap.to(boxRef.current, {
+        y: "0vh",
+        opacity: 0,
+        duration: 0.1,
+        onComplete: () => {
+          gsap.delayedCall(gsap.utils.random(1, 2), () => {
+            generateColor();
+            GenerateNewEquation();
+            setSolved(false);
+            animRef.current
+              .restart()
+              .timeScale(animRef.current.timeScale() * 1.25);
+          });
+        },
+      });
+    }
+  }, [solved]);
 
   const GenerateNewEquation = () => {
     let newRandNums = getRandNumbers(operation, 0, maxNumber);
@@ -60,7 +84,8 @@ const Box = ({
   };
 
   useEffect(() => {
-    tl.set(boxRef.current, {
+    animRef.current = tl.set(boxRef.current, {
+      opacity: 1,
       scale: 1,
     });
     tl.to(boxRef.current, {
@@ -74,9 +99,6 @@ const Box = ({
         pointsRef.current = Math.floor(
           Math.max(pointsRef.current * POINTS_MULTIPLIER, 10)
         );
-        // generateColor();
-
-        // setColor(randomColor);
       },
     });
   }, []);

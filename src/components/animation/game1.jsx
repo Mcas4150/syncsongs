@@ -67,8 +67,8 @@ const GameOne = () => {
       {!playing && !finished && (
         <Menu>
           <Title>Math Game</Title>
-          <Button className={"bn54"} onClick={startGame}>
-            <span className="bn54span">Start</span>
+          <Button className="button" onClick={startGame}>
+            <span className="buttonspan">Start</span>
           </Button>
         </Menu>
       )}
