@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import "../../SynthPad.css";
-import Keyboard from "./keyboard";
-import Logic from "./logic";
+// import React, { useState, useEffect } from "react";
+// import "../../SynthPad.css";
+// import Keyboard from "./keyboard";
+// import Logic from "./logic";
 
-const GameMain = () => {
-  return (
-    <div>
-      <Keyboard />
-      <Logic />
-    </div>
-  );
-};
+// const GameMain = () => {
+//   return (
+//     <div>
+//       <Keyboard />
+//       <Logic />
+//     </div>
+//   );
+// };
 
-export default GameMain;
+// export default GameMain;

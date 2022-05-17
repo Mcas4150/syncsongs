@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
-
+import styled from "@emotion/styled";
 import { gsap } from "gsap";
 import {
   checkAnswers,
@@ -8,6 +8,7 @@ import {
 } from "../../helpers/gameplay";
 import Keyboard from "../game/keyboard";
 import Box from "./box";
+import Score from "./Score";
 import Timer from "./Timer";
 import "../../Animate.css";
 
@@ -39,13 +40,10 @@ const GameOne = () => {
   const [freqSubmit, setFreqSubmit] = useState(0);
   const [answerIndex, setAnswerIndex] = useState(-1);
 
+  //
+
   const startGame = () => {
     setScore(0);
-    GenerateNewEquation(0);
-    GenerateNewEquation(1);
-    GenerateNewEquation(2);
-    GenerateNewEquation(3);
-    GenerateNewEquation(4);
     setBoxes(generateBoxes(5));
     setPlaying(true);
     setFinished(false);
@@ -111,10 +109,10 @@ const GameOne = () => {
   }, [freqSubmit]);
 
   return (
-    <div className="GameOne">
+    <GameContainer>
       {playing && (
         <React.Fragment>
-          <div className="boxContainer">
+          <PlayContainer id="boxContainer">
             {boxes.map(({ speed, points }, index) => (
               <Box
                 key={index}
@@ -122,30 +120,83 @@ const GameOne = () => {
                 points={points}
                 speed={speed}
                 operands={operandsArray[index]}
+                GenerateNewEquation={GenerateNewEquation}
               />
             ))}
-          </div>
-
-          <div className="boxx">score: {score}</div>
-          <Timer time={TIME_LIMIT} onEnd={endGame} score={score} />
-
-          <Keyboard setFreqSubmit={setFreqSubmit} />
+          </PlayContainer>
+          <ControlsContainer>
+            {" "}
+            <Timer time={TIME_LIMIT} onEnd={endGame} score={score} />
+            <Keyboard setFreqSubmit={setFreqSubmit} />
+            <Score score={score} />
+          </ControlsContainer>
         </React.Fragment>
       )}
       {!playing && !finished && (
-        <React.Fragment>
-          <h1>Math Game</h1>
-          <button onClick={startGame}>Start Game</button>
-        </React.Fragment>
+        <Menu>
+          <Title>Math Game</Title>
+          <Button onClick={startGame}>Start Game</Button>
+        </Menu>
       )}
       {finished && (
-        <React.Fragment>
-          <h1>Final Score: {score}</h1>
-          <button onClick={startGame}>Play Again</button>
-        </React.Fragment>
+        <Menu>
+          <Title>Final Score: {score}</Title>
+          <Button onClick={startGame}>Play Again</Button>
+
+          <Credits>
+            Credits:{" "}
+            <Link href={"https://github.com/Mcas4150"}>Mike Cassidy</Link>
+          </Credits>
+        </Menu>
       )}
-    </div>
+    </GameContainer>
   );
 };
 
 export default GameOne;
+
+const Menu = styled.div``;
+
+const Title = styled.div`
+  font-size: 100px;
+  font-family: bubbleFont;
+`;
+
+const Button = styled.button`
+  margin: 25px;
+`;
+
+const Data = styled.div`
+  margin: 0 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+`;
+
+const Credits = styled.div`
+  margin: 25px;
+  font-style: italic;
+`;
+
+const Link = styled.a`
+  text-decoration: none;
+  color: purple;
+`;
+
+const GameContainer = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const PlayContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 80vh;
+`;
+
+const ControlsContainer = styled.div`
+  height: 20vh;
+`;
