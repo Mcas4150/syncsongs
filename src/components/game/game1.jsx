@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import styled from "@emotion/styled";
 import { gsap } from "gsap";
-import Keyboard from "../game/keyboard";
-import Box from "./box";
-import Score from "./Score";
-import Timer from "./Timer";
-import "../../Animate.css";
+import Keyboard from "./keyboard";
+import Box from "../animation/box";
+import Score from "../animation/Score";
+import Timer from "../animation/Timer";
 
 const generateBoxes = (amount) =>
   new Array(amount).fill().map(() => ({
@@ -25,6 +24,8 @@ const GameOne = () => {
   const [score, setScore] = useState(0);
   const [boxes, setBoxes] = useState(generateBoxes(5));
   const [solutionSubmit, setSolutionSubmit] = useState(0);
+
+  const ColorString = (word) => {};
 
   const startGame = () => {
     setScore(0);

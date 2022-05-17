@@ -1,6 +1,6 @@
 import "./App.css";
 
-import GameOne from "./components/animation/game1";
+import GameOne from "./components/game/game1";
 
 function App() {
   return (

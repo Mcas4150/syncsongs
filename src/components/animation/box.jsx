@@ -1,12 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "@emotion/styled";
-import {
-  checkAnswers,
-  getRandNumbers,
-  getCorrectAnswer,
-} from "../../helpers/gameplay";
+import { getRandNumbers, getCorrectAnswer } from "../../helpers/gameplay";
 import { gsap } from "gsap";
-// import "../../Animate.css";
+import "../../shapes.css";
 
 const Box = ({
   operation,
@@ -62,6 +58,7 @@ const Box = ({
           gsap.delayedCall(gsap.utils.random(1, 2), () => {
             generateColor();
             GenerateNewEquation();
+
             setSolved(false);
             animRef.current
               .restart()
@@ -117,7 +114,7 @@ const BoxShape = styled.div`
   height: 150px;
   max-width: 15vw;
   max-height: 15vw;
-  border-radius: 12px;
+  //   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
