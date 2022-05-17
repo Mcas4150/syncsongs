@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { gsap } from "gsap";
 import Keyboard from "./keyboard";
 import Box from "../animation/box";
 import Score from "../animation/Score";
 import Timer from "../animation/Timer";
+import TitleText from "../animation/TitleText";
 
 const generateBoxes = (amount) =>
   new Array(amount).fill().map(() => ({
@@ -15,17 +16,13 @@ const generateBoxes = (amount) =>
 const GameOne = () => {
   const TIME_LIMIT = 30000;
 
-  // const AnswerPoints = 25;
   const operation = "+";
-  const maxNumber = 25;
-
   const [playing, setPlaying] = useState(false);
   const [finished, setFinished] = useState(false);
+  const [maxNumber, setMaxNumber] = useState(25);
   const [score, setScore] = useState(0);
   const [boxes, setBoxes] = useState(generateBoxes(5));
   const [solutionSubmit, setSolutionSubmit] = useState(0);
-
-  const ColorString = (word) => {};
 
   const startGame = () => {
     setScore(0);
@@ -67,7 +64,7 @@ const GameOne = () => {
       )}
       {!playing && !finished && (
         <Menu>
-          <Title>Math Game</Title>
+          <TitleText text={"Math Game"}></TitleText>
           <Button className="button" onClick={startGame}>
             <span className="buttonspan">Start</span>
           </Button>
@@ -75,7 +72,7 @@ const GameOne = () => {
       )}
       {finished && (
         <Menu>
-          <Title>Final Score: {score}</Title>
+          <TitleText text={"Final Score:"}>{score}</TitleText>
           <Button className="button" onClick={startGame}>
             <span className="buttonspan">Replay</span>
           </Button>
@@ -97,11 +94,6 @@ const Menu = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
-
-const Title = styled.div`
-  font-size: 100px;
-  font-family: bubbleFont;
 `;
 
 const Button = styled.button`
