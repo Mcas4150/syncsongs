@@ -67,13 +67,17 @@ const GameOne = () => {
       {!playing && !finished && (
         <Menu>
           <Title>Math Game</Title>
-          <Button onClick={startGame}>Start Game</Button>
+          <Button className={"bn54"} onClick={startGame}>
+            <span className="bn54span">Start</span>
+          </Button>
         </Menu>
       )}
       {finished && (
         <Menu>
           <Title>Final Score: {score}</Title>
-          <Button onClick={startGame}>Play Again</Button>
+          <Button className="button" onClick={startGame}>
+            <span className="buttonspan">Replay</span>
+          </Button>
 
           <Credits>
             Credits:{" "}
@@ -87,7 +91,12 @@ const GameOne = () => {
 
 export default GameOne;
 
-const Menu = styled.div``;
+const Menu = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 const Title = styled.div`
   font-size: 100px;
@@ -108,6 +117,7 @@ const Data = styled.div`
 const Credits = styled.div`
   margin: 25px;
   font-style: italic;
+  font-size: 25px;
 `;
 
 const Link = styled.a`

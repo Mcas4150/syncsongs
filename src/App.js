@@ -1,7 +1,5 @@
-import logo from "./logo.svg";
 import "./App.css";
 
-import GameMain from "./components/game/gameMain";
 import GameOne from "./components/animation/game1";
 
 function App() {
