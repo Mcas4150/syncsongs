@@ -55,10 +55,14 @@ const Title = styled.div`
   font-size: 150px;
   font-family: bubbleFont;
   display: flex;
-  max-width: 80vw;
+  max-width: 85vw;
+  //   @media (max-width: 768px) {
+  //     display: grid;
+  //     grid-template-columns: repeat(auto-fill, 62px);
+  //   }
 `;
 
-const Char = styled.span`
+const Char = styled.div`
   display: block;
-  max-width: 20vw;
+  margin: 5px;
 `;

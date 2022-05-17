@@ -61,7 +61,8 @@ const GameOne = () => {
       )}
       {!playing && !finished && (
         <Menu>
-          <TitleText text={"Math Game"}></TitleText>
+          <TitleText text={"Math"} />
+          <TitleText text={"Game"} />
           <Button className="button" onClick={startGame}>
             <span className="buttonspan">Start</span>
           </Button>
@@ -69,7 +70,9 @@ const GameOne = () => {
       )}
       {finished && (
         <Menu>
-          <TitleText text={"Final Score:"}>{score}</TitleText>
+          <TitleText text={"Final"} />
+          <TitleText text={"Score"} />
+          <FinalScore>{score}</FinalScore>
           <Button className="button" onClick={startGame}>
             <span className="buttonspan">Replay</span>
           </Button>
@@ -95,6 +98,10 @@ const Menu = styled.div`
 
 const Button = styled.button`
   margin: 25px;
+`;
+
+const FinalScore = styled.div`
+  font-size: 150px;
 `;
 
 const Credits = styled.div`
