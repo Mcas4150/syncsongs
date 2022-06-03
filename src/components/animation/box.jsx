@@ -39,10 +39,12 @@ const Box = ({
   }, []);
 
   useEffect(() => {
-    if (parseInt(solutionSubmit) === correctAnswer) {
-      setScore(score + 1);
-
-      setSolved(true);
+    for (let i = 0; i < solutionSubmit.length; i++) {
+      if (parseInt(solutionSubmit[i]) === correctAnswer) {
+        setScore(score + 1);
+        setSolved(true);
+        return;
+      }
     }
   }, [solutionSubmit]);
 

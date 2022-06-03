@@ -5,11 +5,12 @@ const Keyboard = ({ setSolutionSubmit }) => {
   const keyRef = useRef(0);
 
   const handleKeyboardInput = (e) => {
-    if (e.key === "Enter") {
-      console.log("enter");
-      setSolutionSubmit(keyRef.current.value);
-      document.getElementById("inputField").value = "";
-    }
+      let solutions = [
+          keyRef.current.value.slice(-1),
+          keyRef.current.value.slice(-2),
+          keyRef.current.value.slice(-3)
+      ]
+      setSolutionSubmit(solutions);
   };
 
   return (
@@ -18,7 +19,7 @@ const Keyboard = ({ setSolutionSubmit }) => {
         type="text"
         id="inputField"
         ref={keyRef}
-        onKeyDown={handleKeyboardInput}
+        onChange={handleKeyboardInput}
         placeholder={"solve"}
       />
     </div>
